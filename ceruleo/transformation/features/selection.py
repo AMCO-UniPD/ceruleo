@@ -4,11 +4,9 @@ from typing import List, Optional, Union
 import numpy as np
 import pandas as pd
 from ceruleo.transformation import TransformerStep
+import ipdb
 
 logger = logging.getLogger(__name__)
-
-
-
 
 
 class ByNameFeatureSelector(TransformerStep):
@@ -31,16 +29,19 @@ class ByNameFeatureSelector(TransformerStep):
         else:
             features = list(set(df.columns))
 
+        ipdb.set_trace()
+
         if len(self.features_computed_) == 0:
             self.features_computed_ = features
         else:
             self.features_computed_ = [
                 f for f in self.features_computed_ if f in features
             ]
+        ipdb.set_trace()
         return self
 
     def fit(self, df:pd.DataFrame, y=None):
-        """ 
+        """
         Find the indices of the features to select
 
         Parameters:
@@ -55,7 +56,7 @@ class ByNameFeatureSelector(TransformerStep):
         return X.loc[:, self.features_computed_].copy()
 
     def transform(self, X:pd.DataFrame) -> pd.DataFrame:
-        """ 
+        """
         Transform the input life
 
         Parameters:
@@ -78,8 +79,6 @@ class ByNameFeatureSelector(TransformerStep):
         name, f = self.description()
         features = ', '.join(f)[:10]
         return f'{name} : [{features}]'
-        
-
 
 class PositionFeatures(TransformerStep):
     """
@@ -99,7 +98,7 @@ class PositionFeatures(TransformerStep):
 
         Parameters:
             X: The input life to be transformed
-        
+
         Returns:
             A new DataFrame containing the features in the order specified in the constructor
         """
